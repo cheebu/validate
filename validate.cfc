@@ -100,6 +100,38 @@
 					}
 				}
 
+
+				if (ruletype eq "valid_zip") {
+					bMatch = true;
+					if (structKeyExists(arguments.form, "#variables.fieldName#")){
+
+						bPassed = 0;
+
+	    				postalCode = trim(arguments.form[variables.fieldName]);
+
+					    if (REFind('^[[:digit:]]{5}(( |-)?[[:digit:]]{4})?$',postalCode)) {
+					        bPassed = 1;
+					    }
+
+   						if (!bPassed ) {
+
+						    if (REFind('^[A-CEG-NPR-TVXYa-ceg-npr-tvxy][[:digit:]][A-CEG-NPR-TVW-Za-ceg-npr-tvw-z]( |-)?[[:digit:]][A-CEG-NPR-TVW-Za-ceg-npr-tvw-z][[:digit:]]$',postalCode) ) {
+								bPassed = 1;
+							}
+
+	   						if (!bPassed) {
+							    if (REFind('^[A-CEG-NPR-TVXYa-ceg-npr-tvxy][[:digit:]][A-CEG-NPR-TVW-Za-ceg-npr-tvw-z]$', postalCode)) {
+									bPassed = 1;
+								}
+   							}					
+   						} 
+
+						if (!bPassed) {
+							lstError = listAppend(lstError,nRow,",");			
+						}
+					}
+				}
+
 				if (left(ruletype,6) eq "length") {
 					// this tests to see if the length of the field is within the limits of the 
 					bMatch = true;
@@ -263,6 +295,50 @@
 		
 		<cfreturn arrValidate >
 
+	</cffunction>
+
+	<cffunction name="checkZipUS" output="false" access="private" returntype="boolean" >
+		<cfargument name="postcode" type="string" required="true" >
+
+		<cfscript>
+			/**
+			 * Tests passed value to see if it is a properly formatted U.S. zip code.
+			 * 
+			 * @param str      String to be checked. (Required)
+			 * @return Returns a boolean. 
+			 * @author Jeff Guillaume (jeff@kazoomis.com) 
+			 * @version 1, May 8, 2002 
+			 */
+
+			bFound = REFind('^[[:digit:]]{5}(( |-)?[[:digit:]]{4})?$', arguments.postcode); 
+
+		</cfscript>
+	
+		<cfreturn bFound >
+	
+	</cffunction>
+
+
+	<cffunction name="checkZipCA" output="false" access="private" returntype="boolean" >
+		<cfargument name="postcode" type="string" required="true" >
+		
+		<cfscript>
+			/**
+			 * Tests passed value to see if it is a properly formatted Canadian zip code.
+			 * Peter J. Farrell (pjf@maestropublishing.com) Now checks if 1st digit if the FDA (Foward Delivery Area - 1st three digits of postal code) is one of the current 18 characters used by Canada Post as of April 2004 to signalfy a province or provincial area
+			 * 
+			 * @param str      String to be checked. (Required)
+			 * @return Returns a boolean. 
+			 * @author Jeff Guillaume (jeff@kazoomis.com) 
+			 * @version 4, July 15, 2005 
+			 */
+			 
+			 bFound = REFind('^[A-CEG-NPR-TVXYa-ceg-npr-tvxy][[:digit:]][A-CEG-NPR-TVW-Za-ceg-npr-tvw-z]( |-)? [[:digit:]][A-CEG-NPR-TVW-Za-ceg-npr-tvw-z][[:digit:]]$', arguments.postcode);
+
+		</cfscript>
+	
+		<cfreturn bFound >
+	
 	</cffunction>
 
 </cfcomponent>
