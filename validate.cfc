@@ -1,5 +1,14 @@
 <cfcomponent output="true">
 
+	<!--- 
+		Author:			William Rae
+		Company:		Wilson Interactive
+		First published:	July 2014	
+		Last update:		April 11, 2018
+		Version			0.073
+		github repository: 	https://github.com/cheebu/validate
+	--->	
+
 	<!---- init ---->
 	<cffunction name="init" returntype="any">
 		<cfargument name="dsn" required="true" type="string" > 
