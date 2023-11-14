@@ -289,7 +289,7 @@
 					<cfscript>
 						arrayAppend(arrValidate, structNew());
 						arrValidate[arrayLen(arrValidate)].fieldName	= listGetAt(arguments.rules[nRow],2,",");
-						arrValidate[arrayLen(arrValidate)].error		= listGetAt(arguments.rules[nRow],3,",");
+						arrValidate[arrayLen(arrValidate)].error	= listGetAt(arguments.rules[nRow],listLen(arguments.rules[nRow]),",");
 					</cfscript>			
 				</cfloop>
 				
