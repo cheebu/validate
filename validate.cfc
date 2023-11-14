@@ -100,6 +100,18 @@
 					}
 				}
 
+				if (ruletype eq "passwordStrength") {
+					bMatch = true;
+					if (structKeyExists(arguments.form, "#variables.fieldName#")){
+						if( !( len(arguments.form[variables.fieldName]) gte application.minPasswordLength 
+								AND refind('[A-Z]',arguments.form[variables.fieldName]) 
+								AND refind('[a-z]',arguments.form[variables.fieldName]) 
+								AND refind('[0-9]',arguments.form[variables.fieldName]) 
+								AND refind('[~!@##$%^&*()]',arguments.form[variables.fieldName]) )) {
+							lstError = listAppend(lstError,nRow,",");
+						}
+					}
+				}
 
 				if (ruletype eq "valid_zip") {
 					bMatch = true;
