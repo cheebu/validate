@@ -11,8 +11,6 @@
 
 	<!---- init ---->
 	<cffunction name="init" returntype="any">
-		<cfargument name="dsn" required="true" type="string" > 
-		<cfset variables.dsn = arguments.dsn />
 		<!---- return success ---->
 		<cfreturn this />
 	</cffunction>
