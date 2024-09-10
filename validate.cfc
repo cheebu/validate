@@ -22,7 +22,7 @@
 		<cfset var lstError = "" >
 		<cfset var arrValidate = arrayNew(1) >
 
-		<cfif arrayLen(arguments.rules) AND structKeyExists(arguments ,'form') AND NOT structIsEmpty(arguments.form) >
+		<cfif arrayLen(arguments.rules) AND structKeyExists(arguments ,'form') AND !structIsEmpty(arguments.form) >
 		
 			<cfloop from="1" to="#arrayLen(arguments.rules)#" index="nRow" >
 
@@ -41,7 +41,7 @@
 
 					variables.fieldName = listGetAt(arguments.rules[nRow],2,",");
 					if (structKeyExists(arguments.form, "#variables.fieldName#")){
-						if (NOT len(arguments.form[variables.fieldName] )) {	
+						if (!len(arguments.form[variables.fieldName] )) {	
 							lstError = listAppend(lstError,nRow,",");
 						}												
 					} else {
@@ -56,7 +56,7 @@
 					
 					variables.fieldName = listGetAt(arguments.rules[nRow],2,",");
 					if (structKeyExists(arguments.form, "#variables.fieldName#")){
-						if (NOT isNumeric(arguments.form[variables.fieldName])) {
+						if (!isNumeric(arguments.form[variables.fieldName])) {
 							lstError = listAppend(lstError,nRow,",");
 						}
 					} else {
@@ -83,7 +83,7 @@
 					bMatch = true;
 					variables.fieldName = listGetAt(arguments.rules[nRow],2,",");
 					if (structKeyExists(arguments.form, "#variables.fieldName#")){
-						if (NOT isValid('email', arguments.form[variables.fieldName] )) {
+						if (!isValid('email', arguments.form[variables.fieldName] )) {
 							lstError = listAppend(lstError,nRow,",");			
 						}
 					}
@@ -92,7 +92,7 @@
 				if (ruletype eq "valid_uuid") {
 					bMatch = true;
 					if (structKeyExists(arguments.form, "#variables.fieldName#")){
-						if (NOT isValid('uuid', arguments.form[variables.fieldName] )) {
+						if (!isValid('uuid', arguments.form[variables.fieldName] )) {
 							lstError = listAppend(lstError,nRow,",");			
 						}
 					}
@@ -163,7 +163,7 @@
 
 					} else { 
 					
-						if (NOT isNumeric(mid(ruletype,8,1))) {
+						if (!isNumeric(mid(ruletype,8,1))) {
 							sComp = mid(ruletype,7,2);  
 							nLength = mid(ruletype,9,len(ruletype));
 						} else {
@@ -226,7 +226,7 @@
 
 					} else {
 
-						if (NOT isNumeric(mid(ruletype,7,1))) {
+						if (!isNumeric(mid(ruletype,7,1))) {
 							sComp = mid(ruletype,6,2);  
 							nValue = mid(ruletype,8,len(ruletype));
 						} else {
@@ -271,7 +271,7 @@
 				
 				
 				/* In case the rule entered is not a rule we need to advise the user */
-				if (NOT bMatch) {
+				if (!bMatch) {
 					arrayAppend(arrValidate, structNew());
 					arrValidate[arrayLen(arrValidate)].fieldName	= ruleType; 
 					arrValidate[arrayLen(arrValidate)].error		= 'The rule type you submitted in your rules does not exist';
